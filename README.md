@@ -1,26 +1,28 @@
-# 食遇 Tasty · v1.1.0
+# 食遇 Tasty · v1.2.0
 
-[![版本 v1.1.0](https://img.shields.io/badge/version-v1.1.0-315c46)](https://github.com/JiaJie-cpu/Food-Map/releases/tag/v1.1.0) ![Windows x64](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-607c57) [![MIT](https://img.shields.io/badge/license-MIT-bd8048)](LICENSE)
+[![版本 v1.2.0](https://img.shields.io/badge/version-v1.2.0-315c46)](https://github.com/UUUUDDDD12/Food-Map/releases/tag/v1.2.0) ![Windows x64](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-607c57) [![MIT](https://img.shields.io/badge/license-MIT-bd8048)](LICENSE)
 
 以华北电力大学北京校区为起点的美食地图。侧栏筛选、地图聚合卡片、收藏和食记，都围绕“附近吃什么”展开。
 
 ## 下载使用
 
-Windows 10 / 11 x64：在本仓库的 [Releases](https://github.com/JiaJie-cpu/Food-Map/releases/latest) 下载 `Tasty-1.1.0-windows-x64.zip`，完整解压后双击 **食遇.exe**。无需安装Node.js。不要把GitHub自动生成的“Source code”压缩包当作免安装版。
+Windows 10 / 11 x64：在本仓库的 [Releases](https://github.com/UUUUDDDD12/Food-Map/releases/latest) 下载 `Tasty-1.2.0-windows-x64.zip`，完整解压后双击 **食遇.exe**。无需安装Node.js。不要把GitHub自动生成的“Source code”压缩包当作免安装版。
 
 首次启动选择高德地图或备用地图。高德使用下载者自己的Web端（JS API）Key和安全密钥，可从侧栏齿轮进入“地图设置”修改。Key与安全密钥分别来自[高德开放平台](https://lbs.amap.com/api/javascript-api-v2/prerequisites)，密钥仅保存在本机，保存后返回地图即可应用。地图需要联网。
 
-附带13,807家脱敏门店基础资料，首次启动写入自己的本地数据库。没有作者的密钥、收藏、评价或实拍上传文件。公开图片采用来源链接，不代表商家实时营业；数据与图片来源、使用说明见 [DATA_NOTICE.md](DATA_NOTICE.md)。
+附带13,807家脱敏门店基础资料，首次启动写入自己的本地数据库。没有作者的密钥、收藏、评价、打卡或实拍上传文件。公开图片采用来源链接，不代表商家实时营业；数据与图片来源、使用说明见 [DATA_NOTICE.md](DATA_NOTICE.md)。
 
-[下载 v1.1.0](https://github.com/JiaJie-cpu/Food-Map/releases/tag/v1.1.0) · [图文使用指南](docs/使用指南.md) · [版本更新记录](CHANGELOG.md)
+[下载 v1.2.0](https://github.com/UUUUDDDD12/Food-Map/releases/tag/v1.2.0) · [图文使用指南](docs/使用指南.md) · [版本更新记录](CHANGELOG.md)
 
 ![食遇美食地图](docs/images/map-overview.jpg)
 
 ## 功能
 
 - 高德地图及备用底图；店名匹配自动填写地址和位置。
-- 自助餐、火锅、烤肉等分类；距离、预算、口味及堂食/外卖筛选。
-- 相近店铺聚合，卡片内滚动；收藏店默认展开。
+- 自助餐、火锅、烤肉等分类；距离、预算、口味筛选。
+- 地图随缩放由聚合变为独立小点，再显示店名并自动避让。
+- 聚合卡片支持多店滚动，同点多个收藏分别展开；所有卡片支持拖动。
+- 每次打卡保留日期和1–3星，支持删除误打卡。
 - 店铺详情、多张图片、个人收藏和本机访客评价。
 - SQLite可视化表格管理，可搜索、预览图片和编辑门店。
 
@@ -64,8 +66,8 @@ npm run package:windows
 首次将源码（包括package.json与工作流）推送到main，以及之后在main更新版本号，会自动构建并创建对应Release。也可以推送与package.json一致的版本标签：
 
 ```sh
-git tag v1.1.0
-git push origin v1.1.0
+git tag v1.2.0
+git push origin v1.2.0
 ```
 
 更新版本时先调整package.json和package-lock.json。GitHub无需配置作者的高德密钥，下载者在自己的设置页填写。

@@ -10,6 +10,8 @@ export function openDb(path=process.env.DB_PATH || resolve(dataDirectory,'tasty.
  CREATE TABLE IF NOT EXISTS reviews(id INTEGER PRIMARY KEY,restaurant_id INTEGER NOT NULL REFERENCES restaurants(id),session_id TEXT NOT NULL,author TEXT NOT NULL,rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5),body TEXT NOT NULL,image TEXT NOT NULL DEFAULT '',created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
  CREATE TABLE IF NOT EXISTS favorites(session_id TEXT NOT NULL,restaurant_id INTEGER NOT NULL REFERENCES restaurants(id),PRIMARY KEY(session_id,restaurant_id));
  CREATE INDEX IF NOT EXISTS reviews_restaurant ON reviews(restaurant_id);
+ CREATE TABLE IF NOT EXISTS checkins(id INTEGER PRIMARY KEY,restaurant_id INTEGER NOT NULL REFERENCES restaurants(id),session_id TEXT NOT NULL,visited_on TEXT NOT NULL,rating INTEGER CHECK(rating IS NULL OR rating BETWEEN 1 AND 3),created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+ CREATE INDEX IF NOT EXISTS checkins_owner_restaurant ON checkins(session_id,restaurant_id,id DESC);
  CREATE TABLE IF NOT EXISTS restaurant_photos(restaurant_id INTEGER NOT NULL REFERENCES restaurants(id),url TEXT NOT NULL,source_url TEXT NOT NULL,fetched_at TEXT NOT NULL,PRIMARY KEY(restaurant_id,url));
  CREATE TABLE IF NOT EXISTS discoveries(source_url TEXT PRIMARY KEY,name TEXT NOT NULL,address TEXT NOT NULL,phone TEXT NOT NULL DEFAULT '',status TEXT NOT NULL DEFAULT '待定位',matched_id INTEGER REFERENCES restaurants(id),collected_at TEXT NOT NULL);`);
  const fields=new Set(db.prepare('PRAGMA table_info(restaurants)').all().map(c=>c.name));

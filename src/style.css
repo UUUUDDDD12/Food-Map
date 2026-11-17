@@ -93,7 +93,6 @@
 .workspace{--sidebar-width:320px}.workspace .sidebar-intro{padding-left:15px;padding-right:15px}.sidebar-header{padding-left:15px;padding-right:15px}.sidebar .restaurant-list{padding-left:7px;padding-right:7px}.sidebar .card-photo{width:76px}.sidebar .restaurant-open{gap:10px}.sidebar .filter-row select{font-size:13px;max-width:93px}.sidebar .filter-row label{padding-right:5px;margin-right:5px}.sidebar .filter-toggle{font-size:13px}.sidebar .results-heading{padding-left:15px;padding-right:15px}.sidebar .card-title{font-size:16px}.sidebar .rating-line>span{font-size:11px}.sidebar .card-content p{font-size:13px}@media(min-width:1550px){.workspace{--sidebar-width:340px}.sidebar .card-photo{width:82px}}@media(max-width:740px){.workspace{--sidebar-width:100%}.sidebar .card-photo{width:94px}.sidebar .card-title{font-size:17px}}
 
 .amap-food-dot{width:14px;height:14px;border:2px solid #fff;border-radius:50%;background:#3b6b55;box-shadow:0 1px 5px #19371b35;cursor:pointer}.amap-food-dot.selected{background:#c87940;width:16px;height:16px}.amap-logo,.amap-copyright{z-index:2!important}.amap-scalecontrol{font-size:10px}.map-card-layer{z-index:110}.tile-error{z-index:120}
-.dining-filters{display:flex;gap:6px;margin:12px 0 15px}.dining-filters button{font-size:13px;padding:7px 10px;color:#697b5a;background:#f2f5ec;border:1px solid #e6ebdf;border-radius:5px;flex:1;white-space:nowrap}.dining-filters button.active{color:#fff;background:#315c46;border-color:#315c46}
 .service-badge{display:inline-block;margin-left:6px;padding:1px 4px;border-radius:3px;font-size:10px;background:#eaf0e1;color:#72825f;white-space:nowrap}
 .service-evidence{font-size:11px;line-height:1.7;color:#7b896d}.load-more{margin:18px 0;width:100%;border:1px solid #dbe5d0;border-radius:6px;padding:12px;font-size:12px;background:#f1f5e9;color:#536e42}
 .map-point{position:absolute;transform:translate(-50%,-50%);width:26px;height:26px;pointer-events:auto;padding:0;border-radius:50%}.map-point:after{content:'';width:12px;height:12px;background:#3b6b55;border:2px solid #fff;border-radius:50%;box-shadow:0 1px 5px #1c3f222d}.map-point:hover:after{background:#b27b42;width:15px;height:15px}
@@ -117,3 +116,33 @@
 .category-filter-menu button:focus-visible{outline:2px solid #6e9777;outline-offset:-2px;background:#eef3e8}
 .category-filter-menu button.is-selected{background:#315c46;color:#fff;font-weight:500}
 @media(prefers-reduced-motion:reduce){.category-filter-menu{animation:none}.category-filter-trigger>svg{transition:none}}
+.map-stack{height:100%;display:flex;flex-direction:column}
+.stack-heading{height:30px;min-height:30px;padding:0 7px 0 9px;flex-shrink:0}
+.stack-drag-handle{display:flex;align-items:center;gap:7px;flex:1;min-width:0;height:100%;cursor:grab;touch-action:none;user-select:none;color:#80916e;font-size:11px;outline-offset:-2px}
+.stack-drag-handle>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stack-drag-handle>svg{color:#9ba88d;flex-shrink:0}
+.is-dragging .stack-drag-handle{cursor:grabbing}.is-dragging .map-stack{box-shadow:0 8px 30px #25452b38;border-color:#7f9e75}
+.stack-scroll{position:relative;flex-shrink:0;scroll-snap-type:y proximity;overscroll-behavior:contain}
+.stack-shop{padding:10px 11px 8px;scroll-snap-stop:normal;border-bottom:1px solid #edf1e6}.stack-shop:last-child{border-bottom:0}
+.stack-shop-summary{position:relative;height:86px}.stack-info strong{font-size:14px;line-height:1.45}.stack-info p{font-size:12px}
+.stack-shop-summary .stack-favorite{right:-2px;bottom:-2px}.stack-shop .checkins{margin-top:4px}
+.checkin-action{display:flex;align-items:center;justify-content:space-between;gap:8px;height:26px}
+.checkin-action>button:first-child{font-size:11px;line-height:18px;border:1px solid #dce6d3;border-radius:5px;background:#f4f7ee;color:#54754b;padding:1px 9px}
+.checkin-action>button:first-child:hover{background:#eaf1e2;border-color:#b5c7a5}
+.checkin-records{max-height:48px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#d3dfc8 transparent}
+.checkin-row{display:flex;align-items:center;justify-content:space-between;gap:8px;height:24px;min-height:24px}
+.checkin-row time{font-size:11px;color:#7c8b70;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+.checkin-stars{display:flex;align-items:center;color:#ba8b50;gap:0}.checkin-stars button{padding:3px;width:24px;height:24px;color:inherit}.checkin-stars button:hover{background:#f3efdf;border-radius:4px}
+.restaurant-card>.checkins{margin-top:7px}.restaurant-card .checkin-action .favorite-button{position:static;padding:3px;width:24px;height:24px}
+.detail-content>.checkins{margin:14px 0 18px}.detail-content>.checkins .checkin-records{max-height:144px}.detail-content>.checkins .checkin-action>button{font-size:12px;padding:3px 12px}
+.stack-scroll,.checkin-records{touch-action:pan-y}
+.map-marker{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;padding:0;overflow:visible;z-index:1;isolation:isolate}
+.map-marker.map-point{width:24px;height:24px;border:0;border-radius:50%;background:transparent;box-shadow:none}
+.map-marker.map-point:after{content:'';display:block;flex-shrink:0;width:12px;height:12px;box-sizing:border-box;border:2px solid #fffefa;border-radius:50%;background:#396d50;box-shadow:0 1px 5px #243f362d}
+.map-marker.map-cluster{width:var(--marker-size);height:var(--marker-size);border:2px solid #fffefa;font-size:11px;box-shadow:0 0 0 3px #315e4517,0 2px 7px #23442b25}
+.map-marker.marker-favorite.map-point:after{width:14px;height:14px;background:#b8804d}.map-marker.marker-selected.map-point:after{width:15px;height:15px;background:#bd8048;box-shadow:0 0 0 4px #bd804824}
+.map-marker.map-point .marker-name{top:calc(50% + 12px)}
+.marker-count{pointer-events:none;line-height:1}
+.marker-name{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:13px;font-weight:550;line-height:17px;white-space:normal;text-align:center;color:#294a35;visibility:hidden;pointer-events:none;text-shadow:-1px -1px 0 #fffefa,1px -1px 0 #fffefa,-1px 1px 0 #fffefa,1px 1px 0 #fffefa,0 0 5px #fffefa,0 0 5px #fffefa}
+.marker-name.name-visible{visibility:visible;pointer-events:auto}.map-marker:hover,.map-marker:focus-visible{z-index:9}.map-marker.marker-with-name:hover .marker-name,.map-marker.marker-with-name:focus-visible .marker-name{visibility:visible;pointer-events:auto}
+.map-marker.marker-favorite .marker-name{color:#80552f}.map-marker.marker-selected .marker-name{color:#9d6037;font-weight:650}
+.checkin-date{display:flex;align-items:center;gap:4px;min-width:0}.checkin-delete{width:22px;height:22px;padding:4px;color:#94a087;border-radius:4px;flex-shrink:0}.checkin-delete:hover{background:#faeee5;color:#ad664b}.checkin-delete:disabled{cursor:wait}

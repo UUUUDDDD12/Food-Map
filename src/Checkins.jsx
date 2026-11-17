@@ -1,0 +1,7 @@
+import React,{useRef,useState} from 'react';
+import {Star,Trash2} from 'lucide-react';
+export default function Checkins({restaurant:r,checkin,rateCheckin,deleteCheckin,trailing}){
+ const[busy,setBusy]=useState(false),lock=useRef(false);
+ async function perform(action){if(lock.current)return;lock.current=true;setBusy(true);try{await action();}finally{lock.current=false;setBusy(false);}}
+ return <div className="checkins" onPointerDown={e=>e.stopPropagation()}><div className="checkin-action"><button disabled={busy} onClick={()=>perform(()=>checkin(r))} aria-label={`打卡 ${r.name}`}>打卡</button>{trailing}</div>{!!r.checkins?.length&&<div className="checkin-records" onWheel={e=>e.stopPropagation()} aria-label={`${r.name}的打卡记录`}>{r.checkins.map(visit=><div className="checkin-row" key={visit.id}><div className="checkin-date"><button className="checkin-delete" disabled={busy} title="删除这次打卡" aria-label={`删除 ${visit.visited_on} 的打卡`} onClick={()=>perform(()=>deleteCheckin(r,visit.id))}><Trash2 size={12}/></button><time dateTime={visit.visited_on}>{visit.visited_on}</time></div><div className="checkin-stars" role="group" aria-label={`${visit.visited_on}打卡评分`}>{[1,2,3].map(n=><button key={n} disabled={busy} aria-label={`${visit.visited_on}打卡评${n}星`} aria-pressed={visit.rating===n} onClick={()=>perform(()=>rateCheckin(r,visit.id,n))}><Star size={14} fill={n<=(visit.rating||0)?'currentColor':'none'}/></button>)}</div></div>)}</div>}</div>;
+}
