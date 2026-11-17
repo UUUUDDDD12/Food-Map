@@ -22,11 +22,13 @@ function accessibleMarker(element,name,expanded,click){
 export async function createMapAdapter(element,config,{center,onChange,onZoom,onError}){
  if(config.provider==='amap')return createAMap(element,config,{center,onChange,onZoom,onError});
  const map=L.map(element,{center,zoom:16,zoomControl:false,minZoom:MIN_MAP_ZOOM,maxZoom:MAX_MAP_ZOOM,zoomSnap:1,zoomDelta:1,zoomAnimation:false,fadeAnimation:false});
- const markers=L.layerGroup().addTo(map),origin=L.layerGroup().addTo(map);
+ const markers=L.layerGroup().addTo(map),origin=L.layerGroup().addTo(map),searchLocation=L.layerGroup().addTo(map);
  const tiles=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',tileOptions(L.Browser.retina)).on('tileerror',()=>onError('底图加载遇到问题')).addTo(map);
  L.control.scale({imperial:false,position:'bottomright'}).addTo(map);
  map.on('move zoom resize',onChange);map.on('zoomend',()=>onZoom(map.getZoom()));
  return{
+  clearSearchLocation:()=>searchLocation.clearLayers(),
+  drawSearchLocation(place){searchLocation.clearLayers();const label=document.createElement('span');label.textContent=place.name;L.marker([place.lat,place.lng],{icon:L.divIcon({className:'',html:'<div class="address-pin"></div>',iconSize:[20,20],iconAnchor:[10,10]})}).addTo(searchLocation).bindTooltip(label,{permanent:true,direction:'top',className:'address-pin-label',offset:[0,-12]});},
   provider:'osm',getZoom:()=>map.getZoom(),getSize:()=>map.getSize(),latLngToContainerPoint:p=>map.latLngToContainerPoint(p),
   prepare:async()=>{},flyTo:(p,z)=>map.flyTo(p,z,{duration:.6}),setZoom:z=>map.setZoom(z),invalidateSize:()=>map.invalidateSize(),remove:()=>map.remove(),
   drawOrigin(point){origin.clearLayers();L.circle(point,{radius:180,color:'#427866',weight:1,fillColor:'#64947f',fillOpacity:.06,dashArray:'4 6',interactive:false}).addTo(origin);L.marker(point,{icon:L.divIcon({className:'',html:'<div class="origin-dot"><span></span></div>',iconSize:[24,24],iconAnchor:[12,12]})}).addTo(origin);},
@@ -46,10 +48,12 @@ async function createAMap(element,config,{center,onChange,onZoom}){
  await prepare([center]);
  const position=p=>converted.get(p.join(','));
  const map=new AMap.Map(element,{center:position(center),zoom:16,zooms:[MIN_MAP_ZOOM,MAX_MAP_ZOOM],viewMode:'2D',pitch:0,rotation:0,rotateEnable:false,pitchEnable:false,animateEnable:false,resizeEnable:true,showLabel:true,mapStyle:'amap://styles/normal',features:['bg','road','building','point']});
- const markerObjects=[],originObjects=[];
+ const markerObjects=[],originObjects=[];let searchMarker;
  map.on('mapmove',onChange);map.on('zoomchange',onChange);map.on('complete',onChange);map.on('zoomend',()=>{onZoom(map.getZoom());onChange();});
  AMap.plugin('AMap.Scale',()=>map.addControl(new AMap.Scale({position:'RB',offset:new AMap.Pixel(22,20)})));
  return{
+   clearSearchLocation(){if(searchMarker){map.remove(searchMarker);searchMarker=null;}},
+   drawSearchLocation(place){if(searchMarker)map.remove(searchMarker);const content=document.createElement('div');content.className='address-pin';content.title=place.name;searchMarker=new AMap.Marker({position:position([place.lat,place.lng]),content,offset:new AMap.Pixel(-10,-10),zIndex:200});const label=document.createElement('span');label.className='address-pin-label';label.textContent=place.name;searchMarker.setLabel({content:label.outerHTML,direction:'top',offset:new AMap.Pixel(0,-12)});map.add(searchMarker);},
    provider:'amap',prepare,getZoom:()=>map.getZoom(),getSize:()=>({x:element.clientWidth,y:element.clientHeight}),
    latLngToContainerPoint(p){const pos=position(p);if(!pos)return{x:-10000,y:-10000};const pixel=map.lngLatToContainer(pos);return{x:pixel.x,y:pixel.y};},
    flyTo(p,z){const pos=position(p);if(pos)map.setZoomAndCenter(z,pos,true);},setZoom:z=>map.setZoom(z,true),invalidateSize:()=>map.resize(),remove:()=>map.destroy(),

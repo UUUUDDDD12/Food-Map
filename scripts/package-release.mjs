@@ -50,7 +50,7 @@ execFileSync(compiler,['/nologo','/codepage:65001','/target:winexe','/platform:x
 const checkRoot=resolve(cache,'smoke-'+Date.now());cpSync(folder,checkRoot,{recursive:true});
 execFileSync(resolve(checkRoot,'食遇.exe'),['--smoke-test'],{timeout:30000});
 const unsafe=[];
-function scan(directory){for(const entry of readdirSync(directory,{withFileTypes:true})){const path=resolve(directory,entry.name);if(entry.isDirectory())scan(path);else if(/\.sqlite(?:-wal|-shm)?$|^\.env$|^map-settings\.json$|\.lnk$/.test(entry.name))unsafe.push(path);}}
+function scan(directory){for(const entry of readdirSync(directory,{withFileTypes:true})){const path=resolve(directory,entry.name);if(entry.isDirectory())scan(path);else if(/\.sqlite(?:-wal|-shm)?$|^\.env$|^(?:map-settings|ai-settings)\.json$|\.lnk$/.test(entry.name))unsafe.push(path);}}
 scan(folder);if(unsafe.length)throw Error('Private data was unexpectedly included in release');
 const releaseZip=folder+'.zip';
 execFileSync('powershell.exe',['-NoProfile','-Command','Compress-Archive -LiteralPath $env:TASTY_RELEASE -DestinationPath $env:TASTY_OUTPUT -CompressionLevel Optimal'],{env:{...process.env,TASTY_RELEASE:folder,TASTY_OUTPUT:releaseZip},stdio:'inherit'});

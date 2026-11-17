@@ -13,3 +13,6 @@ data/
 .playwright-mcp/
 test-results/
 建设资料/
+
+ai-settings.json
+map-settings.json

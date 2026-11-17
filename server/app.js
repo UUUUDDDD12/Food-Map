@@ -1,3 +1,5 @@
+import {AISettings,AIBudget} from './ai-settings.js';
+import {FoodAssistant} from './assistant.js';
 import express from 'express';
 import { CollectionBudget } from './collection-budget.js';
 import { diningModes } from '../shared/food.js';
@@ -11,13 +13,15 @@ import { center } from './seed.js';
 import {MapSettings,localSettingsAccess} from './map-settings.js';
 import {createHash} from 'node:crypto';
 import {projectRoot} from './paths.js';
-export function createApp(db,{uploadDir=resolve(dataDirectory,'uploads'),settings=new MapSettings({file:resolve(dataDirectory,'map-settings.json')})}={}){
+export function createApp(db,{uploadDir=resolve(dataDirectory,'uploads'),settings=new MapSettings({file:resolve(dataDirectory,'map-settings.json')}),aiSettings=new AISettings({file:resolve(dataDirectory,'ai-settings.json')}),aiFetch=fetch}={}){
  const collectionBudget=new CollectionBudget(db);
+ const assistant=new FoodAssistant(db,{settings:aiSettings,mapSettings:settings,budget:new AIBudget(db),fetchImpl:aiFetch});
  const app=express(); app.disable('x-powered-by'); app.use(express.json({limit:'8mb'})); mkdirSync(uploadDir,{recursive:true});
  app.use('/uploads',express.static(uploadDir,{dotfiles:'deny',setHeaders(res){res.set('X-Content-Type-Options','nosniff');res.set('Content-Security-Policy',"default-src 'none'; img-src 'self'");}}));
  app.use('/api',(req,res,next)=>{const raw=req.headers.cookie?.match(/(?:^|;\s*)tasty_session=([a-f0-9]{48})(?:;|$)/)?.[1]; req.session=raw||randomBytes(24).toString('hex'); if(!raw)res.cookie('tasty_session',req.session,{httpOnly:true,sameSite:'strict',secure:req.secure,maxAge:31536000000});res.set('Cache-Control','no-store');next();});
  const limits=new Map(); const limit=(req,res,next)=>{const key=req.ip;const now=Date.now();let entry=limits.get(key);if(!entry||now-entry.at>60000){entry={at:now,n:0};limits.set(key,entry);}if(limits.size>10000)for(const[k,v]of limits)if(now-v.at>60000)limits.delete(k);if(++entry.n>40)return res.status(429).json({error:'操作有些频繁，请一分钟后再试'});next();};
- app.use('/_AMapService',(req,res)=>amapProxy(req,res,collectionBudget,settings));
+ app.use('/_AMapService',(req,res)=>amapProxy(req,res,collectionBudget,settings,assistant));
+ app.use('/api/assistant',assistant.router());
  app.use('/api/admin',adminRouter(db,collectionBudget));
  app.get('/api/settings',localSettingsAccess,(_,res)=>res.json(settings.publicSettings()));
  app.put('/api/settings',localSettingsAccess,(req,res)=>{try{res.json(settings.save(req.body));}catch(error){res.status(400).json({error:error.message});}});

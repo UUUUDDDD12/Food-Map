@@ -146,3 +146,7 @@
 .marker-name.name-visible{visibility:visible;pointer-events:auto}.map-marker:hover,.map-marker:focus-visible{z-index:9}.map-marker.marker-with-name:hover .marker-name,.map-marker.marker-with-name:focus-visible .marker-name{visibility:visible;pointer-events:auto}
 .map-marker.marker-favorite .marker-name{color:#80552f}.map-marker.marker-selected .marker-name{color:#9d6037;font-weight:650}
 .checkin-date{display:flex;align-items:center;gap:4px;min-width:0}.checkin-delete{width:22px;height:22px;padding:4px;color:#94a087;border-radius:4px;flex-shrink:0}.checkin-delete:hover{background:#faeee5;color:#ad664b}.checkin-delete:disabled{cursor:wait}
+
+.map-controls{z-index:120}
+
+.sidebar-header .brand{white-space:nowrap}.sidebar-header .brand-en{display:none}.sidebar-header .sidebar-actions{gap:5px}.sidebar-header .sidebar-ai{width:30px;height:35px;padding:5px;color:#6b8260;border-radius:7px}.sidebar-header .sidebar-ai:hover{background:#eef3e8;color:#315c46}
