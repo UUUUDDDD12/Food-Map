@@ -1,0 +1,15 @@
+node_modules/
+dist/
+release/
+.cache/
+.env
+.env.*
+!.env.example
+data/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.lnk
+.playwright-mcp/
+test-results/
+建设资料/

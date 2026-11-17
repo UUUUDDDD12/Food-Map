@@ -1,0 +1,15 @@
+import express from 'express';
+import {existsSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {loadEnvFile} from 'node:process';
+import {createApp} from '../server/app.js';
+import {openDb} from '../server/db.js';
+import {projectRoot,appDirectory} from '../server/paths.js';
+import {initializeStarterData} from '../server/starter-data.js';
+const envFile=resolve(projectRoot,'.env');
+if(existsSync(envFile))loadEnvFile(envFile);
+const db=openDb();initializeStarterData(db);const app=createApp(db);
+const dist=resolve(appDirectory,'dist');
+app.use(express.static(dist));app.get('/{*path}',(_,res)=>res.sendFile(resolve(dist,'index.html')));
+const port=Number(process.env.PORT)||3000;
+app.listen(port,'127.0.0.1',()=>console.log(`Tasty is ready: http://localhost:${port}`));

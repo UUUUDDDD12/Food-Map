@@ -1,0 +1,21 @@
+{
+  "compression": "gzip",
+  "parts": [
+    "restaurants-001.bin",
+    "restaurants-002.bin",
+    "restaurants-003.bin",
+    "restaurants-004.bin",
+    "restaurants-005.bin",
+    "restaurants-006.bin",
+    "restaurants-007.bin",
+    "restaurants-008.bin",
+    "restaurants-009.bin",
+    "restaurants-010.bin",
+    "restaurants-011.bin",
+    "restaurants-012.bin",
+    "restaurants-013.bin"
+  ],
+  "sha256": "fdec11eedc829150a953aca5c437f6644c95c59db4ecfe259438581e6b0be30c",
+  "restaurants": 13807,
+  "generatedAt": "2026-11-17T01:21:49.544Z"
+}
