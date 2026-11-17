@@ -6,6 +6,11 @@
 
 ## 下载使用
 
+> [!IMPORTANT]
+> **升级前请先退出旧版，并备份整个 `系统文件/data` 文件夹。**
+> 关闭浏览器不会退出后台，请在系统托盘中选择“退出食遇”。将新版完整解压到新文件夹，把备份的 `data` 文件夹复制到新版的 `系统文件/data`，**完成迁移后再启动新版**。
+> 这样可以迁移店铺资料、收藏、评价、打卡、上传图片和已保存的地图配置。请继续使用原浏览器，保留原有Cookie，以便继续管理自己的收藏、评价和打卡。
+
 Windows 10 / 11 x64：在本仓库的 [Releases](https://github.com/UUUUDDDD12/Food-Map/releases/latest) 下载 `Tasty-1.2.0-windows-x64.zip`，完整解压后双击 **食遇.exe**。无需安装Node.js。不要把GitHub自动生成的“Source code”压缩包当作免安装版。
 
 首次启动选择高德地图或备用地图。高德使用下载者自己的Web端（JS API）Key和安全密钥，可从侧栏齿轮进入“地图设置”修改。Key与安全密钥分别来自[高德开放平台](https://lbs.amap.com/api/javascript-api-v2/prerequisites)，密钥仅保存在本机，保存后返回地图即可应用。地图需要联网。
